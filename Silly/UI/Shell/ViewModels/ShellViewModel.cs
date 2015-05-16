@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Silly.Shell;
 using System;
 using System.Linq;
 using System.Windows.Input;
@@ -7,6 +8,8 @@ namespace Silly.UI.Shell.ViewModels
 {
     public class ShellViewModel : Screen
     {
+        private CommandRegistry registry;
+
         private string text;
 
         public string Text
@@ -34,12 +37,20 @@ namespace Silly.UI.Shell.ViewModels
             }
         }
 
+        public ShellViewModel()
+        {
+            this.registry = new CommandRegistry();
+        }
+
         public void ExecuteCommand(KeyEventArgs args)
         {
             if(args.Key == Key.Return)
             {
                 Console.WriteLine(args.Key);
-                Console.WriteLine(CurrentLine);
+                var parser = new CommandParser();
+                var commandParts = parser.Parse(CurrentLine);
+                var command = registry.Resolve(commandParts.First());
+                command.Execute(commandParts.Skip(1).ToArray());
             }
         }
     }
