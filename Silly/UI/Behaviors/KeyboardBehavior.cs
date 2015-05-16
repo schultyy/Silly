@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
@@ -28,7 +29,7 @@ namespace Silly.UI.Behaviors
             var clickedLineIndex = AssociatedObject.GetLineIndexFromCharacterIndex(charIndex);
             var actualLineIndex = AssociatedObject.GetLineIndexFromCharacterIndex(AssociatedObject.CaretIndex);
 
-            if(clickedLineIndex == actualLineIndex)
+            if (clickedLineIndex == actualLineIndex)
             {
                 return;
             }
@@ -51,16 +52,14 @@ namespace Silly.UI.Behaviors
                 case Key.Down:
                     e.Handled = true;
                     break;
-            }
-
-            if (e.Key == Key.Left)
-            {
-                var lineIndex = AssociatedObject.GetLineIndexFromCharacterIndex(AssociatedObject.CaretIndex);
-                var previousLineIndex = AssociatedObject.GetLineIndexFromCharacterIndex(AssociatedObject.CaretIndex - 1);
-                if(lineIndex != previousLineIndex)
-                {
-                    e.Handled = true;
-                }
+                case Key.Left:
+                    var lineIndex = AssociatedObject.GetLineIndexFromCharacterIndex(AssociatedObject.CaretIndex);
+                    var previousLineIndex = AssociatedObject.GetLineIndexFromCharacterIndex(AssociatedObject.CaretIndex - 1);
+                    if (lineIndex != previousLineIndex)
+                    {
+                        e.Handled = true;
+                    }
+                    break;
             }
         }
     }
