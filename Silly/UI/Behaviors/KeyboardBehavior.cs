@@ -16,6 +16,24 @@ namespace Silly.UI.Behaviors
             base.OnAttached();
 
             this.AssociatedObject.PreviewKeyDown += OnTextboxKeydown;
+            this.AssociatedObject.PreviewMouseDown += OnMouseDown;
+        }
+
+        private void OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var point = e.GetPosition(AssociatedObject);
+            var charIndex = AssociatedObject.GetCharacterIndexFromPoint(point, false);
+            if (charIndex == -1)
+                return;
+            var clickedLineIndex = AssociatedObject.GetLineIndexFromCharacterIndex(charIndex);
+            var actualLineIndex = AssociatedObject.GetLineIndexFromCharacterIndex(AssociatedObject.CaretIndex);
+
+            if(clickedLineIndex == actualLineIndex)
+            {
+                return;
+            }
+
+            e.Handled = true;
         }
 
         protected override void OnDetaching()
