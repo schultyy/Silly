@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using Silly.Shell;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 
@@ -39,7 +40,19 @@ namespace Silly.UI.Shell.ViewModels
 
         public ShellViewModel()
         {
-            this.registry = new CommandRegistry();
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            var bootstrapper = new Bootstrapper();
+            bootstrapper.GatherFiles();
+            var compiler = new Compiler();
+            var compiledCommands = bootstrapper.Files
+                .Select(file => new Dictionary<string, string> {
+                    {file, compiler.Compile(file) }
+                });
+            this.registry = new CommandRegistry(compiledCommands.First());
         }
 
         public void ExecuteCommand(KeyEventArgs args)

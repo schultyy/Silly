@@ -61,11 +61,11 @@
       <Name>Silly.Shell</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <TypeScriptCompile Include="Commands\ls.ts">
+    <None Include="..\Silly.Shell\Commands\ls.ts">
+      <Link>Commands\ls.ts</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </TypeScriptCompile>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
