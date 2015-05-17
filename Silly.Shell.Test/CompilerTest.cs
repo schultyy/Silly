@@ -34,7 +34,7 @@ namespace Silly.Shell.Test
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void RaiseExceptionIfScriptIsEmpty()
         {
             compiler.Compile(string.Empty);
