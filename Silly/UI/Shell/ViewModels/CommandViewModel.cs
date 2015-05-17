@@ -22,5 +22,21 @@ namespace Silly.UI.Shell.ViewModels
                 NotifyOfPropertyChange(() => Command);
             }
         }
+
+        private bool isReadOnly;
+
+        public bool IsReadOnly
+        {
+            get { return isReadOnly; }
+            set
+            {
+                if(isReadOnly == value)
+                {
+                    return;
+                }
+                isReadOnly = value;
+                NotifyOfPropertyChange(() => IsReadOnly);
+            }
+        }
     }
 }
