@@ -8,11 +8,12 @@ namespace Silly.Shell
 {
     public class CommandRegistry
     {
-        private Dictionary<string, string> compiledCommands;
+        private Command[] compiledCommands;
 
         public CommandRegistry(Dictionary<string, string> compiledCommands)
         {
-            this.compiledCommands = compiledCommands;
+            this.compiledCommands = compiledCommands.Select((pair,v) => new Command(pair.Key, pair.Value))
+                .ToArray();
         }
 
         public Command Resolve(string commandName)
