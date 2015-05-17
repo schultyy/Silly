@@ -21,7 +21,7 @@
     <ItemsControl ItemsSource="{Binding History}">
         <ItemsControl.Resources>
             <DataTemplate DataType="{x:Type viewmodels:CommandViewModel}">
-                <TextBox Text="{Binding Command}" />
+                <TextBox Text="{Binding Command, UpdateSourceTrigger=PropertyChanged}" cal:Message.Attach="[Event PreviewKeyDown]=[Action ExecuteCommand($eventargs)]" />
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:OutputViewModel}">
                 <TextBlock Text="{Binding Output}" />

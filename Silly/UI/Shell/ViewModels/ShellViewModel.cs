@@ -57,7 +57,7 @@ namespace Silly.UI.Shell.ViewModels
 
         public void ExecuteCommand(KeyEventArgs args)
         {
-            if (args.Key == Key.Return)
+            if (args.Key == Key.Return || args.Key == Key.Enter)
             {
                 var parser = new CommandParser();
                 if (string.IsNullOrEmpty(CurrentLine.Command))
@@ -65,7 +65,8 @@ namespace Silly.UI.Shell.ViewModels
                 var commandParts = parser.Parse(CurrentLine.Command);
                 var command = registry.Resolve(commandParts.First());
                 var result = command.Execute(commandParts.Skip(1).ToArray());
-                
+                var output = new OutputViewModel { Output = result.ToString() };
+                History.Add(output);
             }
         }
     }
