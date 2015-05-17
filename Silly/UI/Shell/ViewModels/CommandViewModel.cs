@@ -36,7 +36,13 @@ namespace Silly.UI.Shell.ViewModels
                 }
                 isReadOnly = value;
                 NotifyOfPropertyChange(() => IsReadOnly);
+                NotifyOfPropertyChange(() => IsFocused);
             }
+        }
+
+        public bool IsFocused
+        {
+            get { return !IsReadOnly; }
         }
     }
 }

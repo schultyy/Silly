@@ -8,6 +8,7 @@
              xmlns:viewmodels="clr-namespace:Silly.UI.Shell.ViewModels"
              xmlns:behaviors="clr-namespace:Silly.UI.Behaviors"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:ext="clr-namespace:Silly.UI.Extensions"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" MinWidth="800" MinHeight="600">
     <ItemsControl ItemsSource="{Binding History}">
@@ -16,7 +17,8 @@
                 <TextBox Text="{Binding Command, UpdateSourceTrigger=PropertyChanged}" 
                          BorderBrush="{x:Null}"
                          cal:Message.Attach="[Event PreviewKeyDown]=[Action ExecuteCommand($eventargs)]" 
-                         IsReadOnly="{Binding IsReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                         IsReadOnly="{Binding IsReadOnly, UpdateSourceTrigger=PropertyChanged}" 
+                         ext:FocusExtension.IsFocused="{Binding IsFocused}"/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:OutputViewModel}">
                 <TextBlock Text="{Binding Output}" />

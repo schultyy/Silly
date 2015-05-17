@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="SillyBootstrapper.cs" />
     <Compile Include="UI\Behaviors\KeyboardBehavior.cs" />
+    <Compile Include="UI\Extensions\FocusExtension.cs" />
     <Compile Include="UI\Shell\ViewModels\CommandViewModel.cs" />
     <Compile Include="UI\Shell\ViewModels\OutputViewModel.cs" />
     <Compile Include="UI\Shell\ViewModels\ShellViewModel.cs" />
