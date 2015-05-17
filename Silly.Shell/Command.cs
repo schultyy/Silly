@@ -27,7 +27,7 @@ namespace Silly.Shell
             Dispose();
         }
 
-        public object Execute(string[] args)
+        public object Execute(string[] args, Environment currentEnvironment)
         {
             return scriptEngine.Evaluate(this.script);
         }

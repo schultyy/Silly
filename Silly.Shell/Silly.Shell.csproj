@@ -49,6 +49,7 @@
     <Compile Include="CommandParser.cs" />
     <Compile Include="CommandRegistry.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="Environment.cs" />
     <Compile Include="File.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

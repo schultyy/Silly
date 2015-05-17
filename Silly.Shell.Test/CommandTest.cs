@@ -17,7 +17,7 @@ namespace Silly.Shell.Test
         [TestMethod]
         public void ExecuteReturnsResult()
         {
-            Assert.AreEqual(5, command.Execute(null));
+            Assert.AreEqual(5, command.Execute(null, new Environment("")));
         }
     }
 }
