@@ -60,7 +60,6 @@ namespace Silly.UI.Shell.ViewModels
         {
             if (args.Key == Key.Return)
             {
-                Console.WriteLine(args.Key);
                 var parser = new CommandParser();
                 var commandParts = parser.Parse(CurrentLine);
                 var command = registry.Resolve(commandParts.First());
