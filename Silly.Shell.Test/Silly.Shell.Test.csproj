@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CommandParserTest.cs" />
+    <Compile Include="CompilerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
