@@ -19,7 +19,7 @@ namespace Silly.Shell
             scriptEngine.Execute(File.ReadAllText("typescriptServices.js"));
         }
 
-        public object Compile(string sourceFile)
+        public string Compile(string sourceFile)
         {
             if (sourceFile == null)
                 throw new ArgumentNullException("sourceFile");
@@ -27,7 +27,7 @@ namespace Silly.Shell
                 throw new ArgumentException("sourceFile");
 
             scriptEngine.Script["sourcefile"] = sourceFile;
-            return scriptEngine.Evaluate("ts.transpile(sourcefile)");
+            return scriptEngine.Evaluate("ts.transpile(sourcefile)") as string;
         }
 
         public void Dispose()
