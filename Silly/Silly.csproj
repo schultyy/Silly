@@ -106,6 +106,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Silly.Shell\Silly.Shell.csproj">
+      <Project>{fe405955-6519-45cb-a50c-f848de7a1cc4}</Project>
+      <Name>Silly.Shell</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

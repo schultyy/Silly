@@ -6,9 +6,13 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:Silly.UI.Shell.Views"
              xmlns:behaviors="clr-namespace:Silly.UI.Behaviors"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" MinWidth="800" MinHeight="600">
-    <TextBox AcceptsReturn="True" TextWrapping="Wrap">
+    <TextBox TextWrapping="Wrap"
+             AcceptsReturn="True"
+             Text="{Binding Text,UpdateSourceTrigger=PropertyChanged}"
+             cal:Message.Attach="[Event PreviewKeyDown]=[Action ExecuteCommand($eventargs)]">
         <i:Interaction.Behaviors>
             <behaviors:KeyboardBehavior />
         </i:Interaction.Behaviors>
