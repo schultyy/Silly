@@ -11,7 +11,7 @@ namespace Silly.Shell.Test
         [TestInitialize]
         public void Setup()
         {
-            command = new Command("3 + 2");
+            command = new Command("add", "3 + 2");
         }
 
         [TestMethod]

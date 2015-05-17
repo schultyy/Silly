@@ -13,14 +13,12 @@ namespace Silly.Shell
 
         private string script;
 
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
-        public Command(string script) : this(script, String.Empty) { }
-
-        public Command(string script, string name)
+        public Command(string name, string script)
         {
-            this.script = script;
             this.Name = name;
+            this.script = script;
             this.scriptEngine = new V8ScriptEngine();
         }
 
