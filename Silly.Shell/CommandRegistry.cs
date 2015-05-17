@@ -17,7 +17,11 @@ namespace Silly.Shell
 
         public Command Resolve(string commandName)
         {
-            throw new NotImplementedException();
+            if (commandName == null)
+                throw new ArgumentNullException("commandName");
+            if (commandName == string.Empty)
+                throw new ArgumentException("commandName");
+            return null;
         }
     }
 }
