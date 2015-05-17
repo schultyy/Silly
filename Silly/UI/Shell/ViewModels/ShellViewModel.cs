@@ -9,7 +9,7 @@ namespace Silly.UI.Shell.ViewModels
 {
     public class ShellViewModel : Screen
     {
-        private CommandRegistry registry;
+        private ScriptRuntime runtime;
 
         private Silly.Shell.Environment currentEnvironment;
 
@@ -54,8 +54,10 @@ namespace Silly.UI.Shell.ViewModels
                 try
                 {
                     var commandParts = parser.Parse(CurrentLine.Command);
-                    var command = registry.Resolve(commandParts.First());
-                    var result = command.Execute(commandParts.Skip(1).ToArray(), currentEnvironment);
+                    var result = runtime.Execute(commandParts.First(), currentEnvironment, null);
+                    //var command = registry.Resolve(commandParts.First());
+                    
+                    //var result = command.Execute(commandParts.Skip(1).ToArray(), currentEnvironment);
                     var output = new OutputViewModel { Output = result.ToString() };
                     History.Add(output);
                 }
@@ -73,13 +75,7 @@ namespace Silly.UI.Shell.ViewModels
         {
             var bootstrapper = new Bootstrapper();
             bootstrapper.GatherFiles();
-            var compiler = new Compiler();
-            var compiledFiles = bootstrapper.Files.Select(f => new File
-            {
-                Filename = f.Filename,
-                Content = compiler.Compile(f.Content)
-            }).ToList();
-            this.registry = new CommandRegistry(compiledFiles);
+            this.runtime = new ScriptRuntime(bootstrapper.Files);
             this.currentEnvironment = new Silly.Shell.Environment(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal));
         }
 

@@ -18,14 +18,13 @@ namespace Silly.Shell
 
         public void GatherFiles()
         {
-            var foo = Directory.EnumerateFiles("Commands");
-            Files = Directory.EnumerateFiles("Commands")
-                .Select(filename => new File
-                {
-                    Filename = Path.GetFileNameWithoutExtension(filename),
-                    Content = System.IO.File.ReadAllText(filename)
-                })
-                .ToList();
+            Files = Directory.EnumerateFiles("Commands", "*.js")
+                            .Select(filename => new File
+                            {
+                                Filename = Path.GetFileNameWithoutExtension(filename),
+                                Content = System.IO.File.ReadAllText(filename)
+                            })
+                            .ToList();
         }
     }
 }
