@@ -20,6 +20,13 @@ namespace Silly.Shell
             this.Name = name;
             this.script = script;
             this.scriptEngine = new V8ScriptEngine();
+            this.scriptEngine.AddHostType("Console", typeof(Console));
+            this.scriptEngine.AddHostType("ClrString", typeof(string));
+            this.scriptEngine.AddHostType("ClrList", typeof(List<>));
+            this.scriptEngine.AddHostType("ClrArray", typeof(Array));
+            this.scriptEngine.AddHostType("IEnumerable", typeof(IEnumerable<>));
+            this.scriptEngine.AddHostType("File", typeof(System.IO.File));
+            this.scriptEngine.AddHostType("Directory", typeof(System.IO.Directory));
         }
 
         ~Command()
@@ -29,7 +36,9 @@ namespace Silly.Shell
 
         public object Execute(string[] args, Environment currentEnvironment)
         {
-            return scriptEngine.Evaluate(this.script);
+            scriptEngine.Execute(this.script);
+            scriptEngine.AddHostObject("env", currentEnvironment);
+            return scriptEngine.Evaluate("call(env)");
         }
 
         public void Dispose()

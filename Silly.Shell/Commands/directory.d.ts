@@ -1,3 +1,4 @@
 ﻿declare class Directory {
-    static GetFiles(directory: String): Array<String>;
+    static GetFiles(directory: ClrString): Array<ClrString>;
+    static GetDirectories(directory: ClrString): Array<ClrString>;
 }
