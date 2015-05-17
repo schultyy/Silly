@@ -12,7 +12,7 @@ namespace Silly.Shell
 
         public CommandRegistry(Dictionary<string, string> compiledCommands)
         {
-            this.compiledCommands = compiledCommands.Select((pair,v) => new Command(pair.Key, pair.Value))
+            this.compiledCommands = compiledCommands.Select((pair, v) => new Command(pair.Key, pair.Value))
                 .ToArray();
         }
 
@@ -22,7 +22,11 @@ namespace Silly.Shell
                 throw new ArgumentNullException("commandName");
             if (commandName == string.Empty)
                 throw new ArgumentException("commandName");
-            return null;
+
+            var result = compiledCommands.FirstOrDefault(cmd => cmd.Name == commandName);
+            if (result == null)
+                throw new ArgumentException(string.Format("Invalid command {0}", commandName));
+            return result;
         }
     }
 }

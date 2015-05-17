@@ -36,5 +36,18 @@ namespace Silly.Shell.Test
         {
             registry.Resolve(string.Empty);
         }
+
+        [TestMethod]
+        public void ResolveCommandByName()
+        {
+            Assert.IsInstanceOfType(registry.Resolve("ls"), typeof(Command));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void RaiseErrorIfCommandNotFound()
+        {
+            registry.Resolve("cd");
+        }
     }
 }
