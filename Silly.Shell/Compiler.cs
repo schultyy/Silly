@@ -21,6 +21,11 @@ namespace Silly.Shell
 
         public object Compile(string sourceFile)
         {
+            if (sourceFile == null)
+                throw new ArgumentNullException("sourceFile");
+            if (sourceFile == string.Empty)
+                throw new ArgumentException("sourceFile");
+
             scriptEngine.Script["sourcefile"] = sourceFile;
             return scriptEngine.Evaluate("ts.transpile(sourcefile)");
         }
