@@ -54,12 +54,23 @@ namespace Silly.UI.Shell.ViewModels
                 try
                 {
                     var commandParts = parser.Parse(CurrentLine.Command);
-                    var result = runtime.Execute(commandParts.First(), currentEnvironment, null);
-                    //var command = registry.Resolve(commandParts.First());
-                    
-                    //var result = command.Execute(commandParts.Skip(1).ToArray(), currentEnvironment);
-                    var output = new OutputViewModel { Output = result.ToString() };
-                    History.Add(output);
+                    string[] parameters = null;
+                    if(commandParts.Length > 1)
+                    {
+                        parameters = commandParts.Skip(1).ToArray();
+                    }
+                    var result = runtime.Execute(commandParts.First(), currentEnvironment, parameters);
+                    if (result is Silly.Shell.Environment)
+                    {
+                        currentEnvironment = result as Silly.Shell.Environment;
+                        var output = new OutputViewModel { Output = currentEnvironment.CurrentWorkingDirectory.ToString() };
+                        History.Add(output);
+                    }
+                    else
+                    {
+                        var output = new OutputViewModel { Output = result.ToString() };
+                        History.Add(output);
+                    }
                 }
                 catch (Exception exc)
                 {

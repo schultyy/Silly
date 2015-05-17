@@ -21,6 +21,8 @@ namespace Silly.Shell
             this.scriptEngine.AddHostType("IEnumerable", typeof(IEnumerable<>));
             this.scriptEngine.AddHostType("File", typeof(System.IO.File));
             this.scriptEngine.AddHostType("Directory", typeof(System.IO.Directory));
+            this.scriptEngine.AddHostType("DirectoryInfo", typeof(System.IO.DirectoryInfo));
+            this.scriptEngine.AddHostType("Environment", typeof(Silly.Shell.Environment));
             this.LoadCommands(commandFiles);
         }
 
@@ -34,7 +36,11 @@ namespace Silly.Shell
 
         public object Execute(string command, Environment environment, string[] args)
         {
-            return this.scriptEngine.Invoke(command, environment);
+            var parameters = new List<object>();
+            parameters.Add(environment);
+            if(args != null)
+                parameters.AddRange(args);
+            return this.scriptEngine.Invoke(command, parameters.ToArray());
         }
 
         public void Dispose()
