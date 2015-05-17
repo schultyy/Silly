@@ -53,12 +53,19 @@
     <Compile Include="CommandParserTest.cs" />
     <Compile Include="CompilerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BootstrapperTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Silly.Shell\Silly.Shell.csproj">
       <Project>{fe405955-6519-45cb-a50c-f848de7a1cc4}</Project>
       <Name>Silly.Shell</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <TypeScriptCompile Include="Commands\ls.ts">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </TypeScriptCompile>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
