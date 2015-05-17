@@ -49,10 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Command.cs" />
     <Compile Include="CommandParser.cs" />
-    <Compile Include="CommandRegistry.cs" />
-    <Compile Include="Compiler.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="File.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,9 +64,6 @@
     </Content>
     <Content Include="Exports\CallbackManager.h" />
     <Content Include="Exports\VersionSymbols.h" />
-    <Content Include="typescriptServices.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="v8-ia32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
