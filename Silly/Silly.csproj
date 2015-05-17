@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Linq.Expressions" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,6 +71,8 @@
     </Compile>
     <Compile Include="SillyBootstrapper.cs" />
     <Compile Include="UI\Behaviors\KeyboardBehavior.cs" />
+    <Compile Include="UI\Shell\ViewModels\CommandViewModel.cs" />
+    <Compile Include="UI\Shell\ViewModels\OutputViewModel.cs" />
     <Compile Include="UI\Shell\ViewModels\ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

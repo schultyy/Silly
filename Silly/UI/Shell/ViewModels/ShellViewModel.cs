@@ -11,36 +11,35 @@ namespace Silly.UI.Shell.ViewModels
     {
         private CommandRegistry registry;
 
-        private string text;
+        private BindableCollection<Screen> history;
 
-        public string Text
+        public BindableCollection<Screen> History
         {
-            get { return text; }
+            get { return history; }
             set
             {
-                if (text == value)
+                if(history == value)
                 {
                     return;
                 }
-                text = value;
-                NotifyOfPropertyChange(() => text);
+                history = value;
+                NotifyOfPropertyChange(() => History);
             }
         }
 
-        public string CurrentLine
+        public CommandViewModel CurrentLine
         {
             get
             {
-                if (String.IsNullOrEmpty(Text))
-                    return String.Empty;
-                var lines = Text.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                return lines.Last().Replace("\r", String.Empty);
+                return History.Last(c => c is CommandViewModel) as CommandViewModel;
             }
         }
 
         public ShellViewModel()
         {
+            History = new BindableCollection<Screen>();
             Initialize();
+            History.Add(new CommandViewModel());
         }
 
         private void Initialize()
@@ -61,11 +60,12 @@ namespace Silly.UI.Shell.ViewModels
             if (args.Key == Key.Return)
             {
                 var parser = new CommandParser();
-                var commandParts = parser.Parse(CurrentLine);
+                if (string.IsNullOrEmpty(CurrentLine.Command))
+                    return;
+                var commandParts = parser.Parse(CurrentLine.Command);
                 var command = registry.Resolve(commandParts.First());
                 var result = command.Execute(commandParts.Skip(1).ToArray());
-                Text += Environment.NewLine;
-                Text += result.ToString();
+                
             }
         }
     }
