@@ -48,12 +48,20 @@ namespace Silly.UI.Shell.ViewModels
             {
                 var parser = new CommandParser();
                 if (string.IsNullOrEmpty(CurrentLine.Command))
-                    return;
-                var commandParts = parser.Parse(CurrentLine.Command);
-                var command = registry.Resolve(commandParts.First());
-                var result = command.Execute(commandParts.Skip(1).ToArray());
-                var output = new OutputViewModel { Output = result.ToString() };
-                History.Add(output);
+                    return;                
+                try
+                {
+                    var commandParts = parser.Parse(CurrentLine.Command);
+                    var command = registry.Resolve(commandParts.First());
+                    var result = command.Execute(commandParts.Skip(1).ToArray());
+                    var output = new OutputViewModel { Output = result.ToString() };
+                    History.Add(output);
+                }
+                catch (Exception exc)
+                {
+                    History.Add(new OutputViewModel { Output = exc.Message });
+                }
+                
                 Freeze();
                 NewCommand();
             }
