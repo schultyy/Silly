@@ -1,6 +1,6 @@
-﻿///<reference path="directory.d.ts" />
-///<reference path="string.d.ts" />
-///<reference path="array.d.ts" />
+﻿///<reference path="Definitions/directory.d.ts" />
+///<reference path="Definitions/string.d.ts" />
+///<reference path="Definitions/array.d.ts" />
 
 class Ls {
     execute(env) {

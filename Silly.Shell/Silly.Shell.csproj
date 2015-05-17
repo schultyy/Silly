@@ -81,9 +81,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Commands\array.d.ts" />
-    <TypeScriptCompile Include="Commands\directory.d.ts" />
-    <TypeScriptCompile Include="Commands\string.d.ts" />
+    <None Include="Commands\Definitions\array.d.ts">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Commands\Definitions\directory.d.ts">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Commands\Definitions\string.d.ts">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
