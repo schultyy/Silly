@@ -18,8 +18,9 @@ namespace Silly.Shell
 
         public void GatherFiles()
         {
+            var foo = Directory.EnumerateFiles("Commands");
             Files = Directory.EnumerateFiles("Commands")
-                .Select(filename => File.ReadAllText(Path.Combine("Commands", filename)))
+                .Select(filename => File.ReadAllText(filename))
                 .ToList();
         }
     }
