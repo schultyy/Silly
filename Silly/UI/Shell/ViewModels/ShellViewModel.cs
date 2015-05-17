@@ -48,7 +48,12 @@ namespace Silly.UI.Shell.ViewModels
             var bootstrapper = new Bootstrapper();
             bootstrapper.GatherFiles();
             var compiler = new Compiler();
-            this.registry = new CommandRegistry(bootstrapper.Files);
+            var compiledFiles = bootstrapper.Files.Select(f => new File
+            {
+                Filename = f.Filename,
+                Content = compiler.Compile(f.Content)
+            }).ToList();
+            this.registry = new CommandRegistry(compiledFiles);
         }
 
         public void ExecuteCommand(KeyEventArgs args)
