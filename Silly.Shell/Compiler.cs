@@ -2,6 +2,7 @@
 using Microsoft.ClearScript.V8;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,10 +15,10 @@ namespace Silly.Shell
         {
             using (var engine = new V8ScriptEngine())
             {
+                engine.Execute(File.ReadAllText("typescriptServices.js"));
                 engine.Script["sourcefile"] = sourceFile;
+                return engine.Evaluate("ts.transpile(sourcefile)");
             }
-            
-            return null;
         }
     }
 }
