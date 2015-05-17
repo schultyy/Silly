@@ -9,18 +9,22 @@ namespace Silly.Shell
 {
     public class Bootstrapper
     {
-        public List<string> Files { get; private set; }
+        public List<File> Files { get; private set; }
 
         public Bootstrapper()
         {
-            Files = new List<string>();
+            Files = new List<File>();
         }
 
         public void GatherFiles()
         {
             var foo = Directory.EnumerateFiles("Commands");
             Files = Directory.EnumerateFiles("Commands")
-                .Select(filename => File.ReadAllText(filename))
+                .Select(filename => new File
+                {
+                    Filename = Path.GetFileNameWithoutExtension(filename),
+                    Content = System.IO.File.ReadAllText(filename)
+                })
                 .ToList();
         }
     }

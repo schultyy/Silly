@@ -12,14 +12,12 @@ namespace Silly.Shell.Test
     {
         private CommandRegistry registry;
 
-        private Dictionary<string, string> compiledCommands;
+        private List<File> compiledCommands;
 
         [TestInitialize]
         public void Setup()
         {
-            compiledCommands = new Dictionary<string, string>{
-                { "ls", "function ls{}" }
-            };
+            compiledCommands = new List<File> { new Silly.Shell.File { Filename = "ls", Content = "function ls() {}" } };
             registry = new CommandRegistry(compiledCommands);
         }
 

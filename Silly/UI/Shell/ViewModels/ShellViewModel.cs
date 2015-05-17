@@ -18,7 +18,7 @@ namespace Silly.UI.Shell.ViewModels
             get { return text; }
             set
             {
-                if(text == value)
+                if (text == value)
                 {
                     return;
                 }
@@ -33,7 +33,7 @@ namespace Silly.UI.Shell.ViewModels
             {
                 if (String.IsNullOrEmpty(Text))
                     return String.Empty;
-                var lines = Text.Split(new [] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                var lines = Text.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
                 return lines.Last().Replace("\r", String.Empty);
             }
         }
@@ -48,22 +48,20 @@ namespace Silly.UI.Shell.ViewModels
             var bootstrapper = new Bootstrapper();
             bootstrapper.GatherFiles();
             var compiler = new Compiler();
-            var compiledCommands = bootstrapper.Files
-                .Select(file => new Dictionary<string, string> {
-                    {file, compiler.Compile(file) }
-                });
-            this.registry = new CommandRegistry(compiledCommands.First());
+            this.registry = new CommandRegistry(bootstrapper.Files);
         }
 
         public void ExecuteCommand(KeyEventArgs args)
         {
-            if(args.Key == Key.Return)
+            if (args.Key == Key.Return)
             {
                 Console.WriteLine(args.Key);
                 var parser = new CommandParser();
                 var commandParts = parser.Parse(CurrentLine);
                 var command = registry.Resolve(commandParts.First());
-                command.Execute(commandParts.Skip(1).ToArray());
+                var result = command.Execute(commandParts.Skip(1).ToArray());
+                Text += Environment.NewLine;
+                Text += result.ToString();
             }
         }
     }

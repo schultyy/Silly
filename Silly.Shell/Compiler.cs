@@ -16,7 +16,7 @@ namespace Silly.Shell
         public Compiler()
         {
             this.scriptEngine = new V8ScriptEngine();
-            scriptEngine.Execute(File.ReadAllText("typescriptServices.js"));
+            scriptEngine.Execute(System.IO.File.ReadAllText("typescriptServices.js"));
         }
 
         public string Compile(string sourceFile)

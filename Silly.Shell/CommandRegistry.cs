@@ -10,9 +10,9 @@ namespace Silly.Shell
     {
         private Command[] compiledCommands;
 
-        public CommandRegistry(Dictionary<string, string> compiledCommands)
+        public CommandRegistry(List<File> compiledCommands)
         {
-            this.compiledCommands = compiledCommands.Select((pair, v) => new Command(pair.Key, pair.Value))
+            this.compiledCommands = compiledCommands.Select(f => new Command(f.Filename, f.Content))
                 .ToArray();
         }
 
