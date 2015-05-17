@@ -21,7 +21,8 @@
                          ext:FocusExtension.IsFocused="{Binding IsFocused}"/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:OutputViewModel}">
-                <TextBlock Text="{Binding Output}" />
+                <ContentPresenter Margin="2"
+                                  Content="{Binding Output}" />
             </DataTemplate>
         </ItemsControl.Resources>
     </ItemsControl>
