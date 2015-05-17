@@ -11,36 +11,60 @@ namespace Silly.UI.Shell.ViewModels
     {
         private CommandRegistry registry;
 
-        private string text;
+        private BindableCollection<Screen> history;
 
-        public string Text
+        public BindableCollection<Screen> History
         {
-            get { return text; }
+            get { return history; }
             set
             {
-                if (text == value)
+                if(history == value)
                 {
                     return;
                 }
-                text = value;
-                NotifyOfPropertyChange(() => text);
+                history = value;
+                NotifyOfPropertyChange(() => History);
             }
         }
 
-        public string CurrentLine
+        public CommandViewModel CurrentLine
         {
             get
             {
-                if (String.IsNullOrEmpty(Text))
-                    return String.Empty;
-                var lines = Text.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                return lines.Last().Replace("\r", String.Empty);
+                return History.Last(c => c is CommandViewModel) as CommandViewModel;
             }
         }
 
         public ShellViewModel()
         {
+            History = new BindableCollection<Screen>();
             Initialize();
+            NewCommand();
+        }
+
+        public void ExecuteCommand(KeyEventArgs args)
+        {
+            if (args.Key == Key.Return || args.Key == Key.Enter)
+            {
+                var parser = new CommandParser();
+                if (string.IsNullOrEmpty(CurrentLine.Command))
+                    return;                
+                try
+                {
+                    var commandParts = parser.Parse(CurrentLine.Command);
+                    var command = registry.Resolve(commandParts.First());
+                    var result = command.Execute(commandParts.Skip(1).ToArray());
+                    var output = new OutputViewModel { Output = result.ToString() };
+                    History.Add(output);
+                }
+                catch (Exception exc)
+                {
+                    History.Add(new OutputViewModel { Output = exc.Message });
+                }
+                
+                Freeze();
+                NewCommand();
+            }
         }
 
         private void Initialize()
@@ -56,17 +80,20 @@ namespace Silly.UI.Shell.ViewModels
             this.registry = new CommandRegistry(compiledFiles);
         }
 
-        public void ExecuteCommand(KeyEventArgs args)
+        private void NewCommand()
         {
-            if (args.Key == Key.Return)
+            History.Add(new CommandViewModel());
+        }
+
+        private void Freeze()
+        {
+            foreach(var vm in History)
             {
-                Console.WriteLine(args.Key);
-                var parser = new CommandParser();
-                var commandParts = parser.Parse(CurrentLine);
-                var command = registry.Resolve(commandParts.First());
-                var result = command.Execute(commandParts.Skip(1).ToArray());
-                Text += Environment.NewLine;
-                Text += result.ToString();
+                if(vm is CommandViewModel)
+                {
+                    var cmd = vm as CommandViewModel;
+                    cmd.IsReadOnly = true;
+                }
             }
         }
     }

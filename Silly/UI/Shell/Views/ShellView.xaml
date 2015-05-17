@@ -5,16 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:Silly.UI.Shell.Views"
+             xmlns:viewmodels="clr-namespace:Silly.UI.Shell.ViewModels"
              xmlns:behaviors="clr-namespace:Silly.UI.Behaviors"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:ext="clr-namespace:Silly.UI.Extensions"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" MinWidth="800" MinHeight="600">
-    <TextBox TextWrapping="Wrap"
-             AcceptsReturn="True"
-             Text="{Binding Text,UpdateSourceTrigger=PropertyChanged}"
-             cal:Message.Attach="[Event PreviewKeyDown]=[Action ExecuteCommand($eventargs)]">
-        <i:Interaction.Behaviors>
-            <behaviors:KeyboardBehavior />
-        </i:Interaction.Behaviors>
-    </TextBox>
+    <ItemsControl ItemsSource="{Binding History}">
+        <ItemsControl.Resources>
+            <DataTemplate DataType="{x:Type viewmodels:CommandViewModel}">
+                <TextBox Text="{Binding Command, UpdateSourceTrigger=PropertyChanged}" 
+                         BorderBrush="{x:Null}"
+                         cal:Message.Attach="[Event PreviewKeyDown]=[Action ExecuteCommand($eventargs)]" 
+                         IsReadOnly="{Binding IsReadOnly, UpdateSourceTrigger=PropertyChanged}" 
+                         ext:FocusExtension.IsFocused="{Binding IsFocused}"/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OutputViewModel}">
+                <TextBlock Text="{Binding Output}" />
+            </DataTemplate>
+        </ItemsControl.Resources>
+    </ItemsControl>
 </UserControl>
