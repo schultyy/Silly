@@ -51,11 +51,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CommandParserTest.cs" />
-    <Compile Include="CommandRegistryTest.cs" />
-    <Compile Include="CompilerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BootstrapperTest.cs" />
-    <Compile Include="CommandTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Silly.Shell\Silly.Shell.csproj">

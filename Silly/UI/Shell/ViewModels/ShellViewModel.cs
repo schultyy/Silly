@@ -9,7 +9,9 @@ namespace Silly.UI.Shell.ViewModels
 {
     public class ShellViewModel : Screen
     {
-        private CommandRegistry registry;
+        private ScriptRuntime runtime;
+
+        private Silly.Shell.Environment currentEnvironment;
 
         private BindableCollection<Screen> history;
 
@@ -52,10 +54,23 @@ namespace Silly.UI.Shell.ViewModels
                 try
                 {
                     var commandParts = parser.Parse(CurrentLine.Command);
-                    var command = registry.Resolve(commandParts.First());
-                    var result = command.Execute(commandParts.Skip(1).ToArray());
-                    var output = new OutputViewModel { Output = result.ToString() };
-                    History.Add(output);
+                    string[] parameters = null;
+                    if(commandParts.Length > 1)
+                    {
+                        parameters = commandParts.Skip(1).ToArray();
+                    }
+                    var result = runtime.Execute(commandParts.First(), currentEnvironment, parameters);
+                    if (result is Silly.Shell.Environment)
+                    {
+                        currentEnvironment = result as Silly.Shell.Environment;
+                        var output = new OutputViewModel { Output = currentEnvironment.CurrentWorkingDirectory.ToString() };
+                        History.Add(output);
+                    }
+                    else
+                    {
+                        var output = new OutputViewModel { Output = result.ToString() };
+                        History.Add(output);
+                    }
                 }
                 catch (Exception exc)
                 {
@@ -71,13 +86,8 @@ namespace Silly.UI.Shell.ViewModels
         {
             var bootstrapper = new Bootstrapper();
             bootstrapper.GatherFiles();
-            var compiler = new Compiler();
-            var compiledFiles = bootstrapper.Files.Select(f => new File
-            {
-                Filename = f.Filename,
-                Content = compiler.Compile(f.Content)
-            }).ToList();
-            this.registry = new CommandRegistry(compiledFiles);
+            this.runtime = new ScriptRuntime(bootstrapper.Files);
+            this.currentEnvironment = new Silly.Shell.Environment(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal));
         }
 
         private void NewCommand()
