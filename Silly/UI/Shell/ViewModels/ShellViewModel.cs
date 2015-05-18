@@ -56,6 +56,12 @@ namespace Silly.UI.Shell.ViewModels
             NewCommand();
         }
 
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            DisplayName = "Silly";
+        }
+
         public void ExecuteCommand(KeyEventArgs args)
         {
             if (args.Key == Key.Return || args.Key == Key.Enter)
