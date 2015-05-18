@@ -34,8 +34,11 @@
                 </StackPanel>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:OutputViewModel}">
-                <ContentPresenter Margin="2"
-                                  Content="{Binding Output}" />
+                <TextBox Background="Transparent"
+                         BorderThickness="0"
+                         Text="{Binding Output, Mode=OneWay}"
+                         IsReadOnly="True"
+                         TextWrapping="Wrap" />
             </DataTemplate>
         </ItemsControl.Resources>
     </ItemsControl>
