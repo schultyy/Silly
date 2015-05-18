@@ -1,5 +1,5 @@
-﻿///<reference path="Definitions/environment.d.ts" />
-///<reference path="Definitions/directory.d.ts" />
+﻿///<reference path="../Definitions/environment.d.ts" />
+///<reference path="../Definitions/directory.d.ts" />
 
 function cd(environment: Environment, newDirectory: String) {
     if (newDirectory === "..") {

@@ -81,18 +81,18 @@
     </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Commands\Definitions\array.d.ts">
+    <None Include="Definitions\array.d.ts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Commands\Definitions\directory.d.ts">
+    <None Include="Definitions\directory.d.ts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Commands\Definitions\string.d.ts">
+    <None Include="Definitions\string.d.ts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Commands\Definitions\environment.d.ts">
+    <None Include="Definitions\environment.d.ts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <TypeScriptCompile Include="Commands\pwd.ts">

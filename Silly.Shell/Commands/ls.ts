@@ -1,7 +1,7 @@
-﻿///<reference path="Definitions/directory.d.ts" />
-///<reference path="Definitions/string.d.ts" />
-///<reference path="Definitions/array.d.ts" />
-///<reference path="Definitions/environment.d.ts" />
+﻿///<reference path="../Definitions/directory.d.ts" />
+///<reference path="../Definitions/string.d.ts" />
+///<reference path="../Definitions/array.d.ts" />
+///<reference path="../Definitions/environment.d.ts" />
 
 function ls(env: Environment) {
     var files = Directory.GetFiles(env.CurrentWorkingDirectory);
