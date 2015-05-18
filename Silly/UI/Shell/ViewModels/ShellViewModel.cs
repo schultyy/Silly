@@ -13,6 +13,18 @@ namespace Silly.UI.Shell.ViewModels
 
         private Silly.Shell.Environment currentEnvironment;
 
+        public Silly.Shell.Environment CurrentEnvironment
+        {
+            get { return currentEnvironment; }
+            set
+            {
+                if (currentEnvironment == value)
+                    return;
+                currentEnvironment = value;
+                NotifyOfPropertyChange(() => CurrentEnvironment);
+            }
+        }
+
         private BindableCollection<Screen> history;
 
         public BindableCollection<Screen> History
@@ -20,7 +32,7 @@ namespace Silly.UI.Shell.ViewModels
             get { return history; }
             set
             {
-                if(history == value)
+                if (history == value)
                 {
                     return;
                 }
@@ -50,21 +62,19 @@ namespace Silly.UI.Shell.ViewModels
             {
                 var parser = new CommandParser();
                 if (string.IsNullOrEmpty(CurrentLine.Command))
-                    return;                
+                    return;
                 try
                 {
                     var commandParts = parser.Parse(CurrentLine.Command);
                     string[] parameters = null;
-                    if(commandParts.Length > 1)
+                    if (commandParts.Length > 1)
                     {
                         parameters = commandParts.Skip(1).ToArray();
                     }
-                    var result = runtime.Execute(commandParts.First(), currentEnvironment, parameters);
+                    var result = runtime.Execute(commandParts.First(), CurrentEnvironment, parameters);
                     if (result is Silly.Shell.Environment)
                     {
                         currentEnvironment = result as Silly.Shell.Environment;
-                        var output = new OutputViewModel { Output = currentEnvironment.CurrentWorkingDirectory.ToString() };
-                        History.Add(output);
                     }
                     else
                     {
@@ -76,7 +86,7 @@ namespace Silly.UI.Shell.ViewModels
                 {
                     History.Add(new OutputViewModel { Output = exc.Message });
                 }
-                
+
                 Freeze();
                 NewCommand();
             }
@@ -87,7 +97,7 @@ namespace Silly.UI.Shell.ViewModels
             var bootstrapper = new Bootstrapper();
             bootstrapper.GatherFiles();
             this.runtime = new ScriptRuntime(bootstrapper.Files);
-            this.currentEnvironment = new Silly.Shell.Environment(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal));
+            CurrentEnvironment = new Silly.Shell.Environment(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal));
         }
 
         private void NewCommand()
@@ -97,9 +107,9 @@ namespace Silly.UI.Shell.ViewModels
 
         private void Freeze()
         {
-            foreach(var vm in History)
+            foreach (var vm in History)
             {
-                if(vm is CommandViewModel)
+                if (vm is CommandViewModel)
                 {
                     var cmd = vm as CommandViewModel;
                     cmd.IsReadOnly = true;
