@@ -21,7 +21,7 @@ namespace Silly.Shell
             this.runtime = new ScriptRuntime(bootstrapper.Files);
         }
 
-        public object Execute(string command, string[] parameters)
+        public ExecutionResult Execute(string command, string[] parameters)
         {
             if (runtime.HasCommand(command))
             {
@@ -30,7 +30,7 @@ namespace Silly.Shell
             return ExecuteSystemCommand(command, parameters);
         }
 
-        private object ExecuteSystemCommand(string command, string[] parameters)
+        private ExecutionResult ExecuteSystemCommand(string command, string[] parameters)
         {
             var processInfo = new ProcessStartInfo(command);
             processInfo.Arguments = String.Join(" ", parameters);
@@ -42,17 +42,24 @@ namespace Silly.Shell
             processInfo.WindowStyle = ProcessWindowStyle.Hidden;
             processInfo.WorkingDirectory = Environment.CurrentWorkingDirectory;
             var process = Process.Start(processInfo);
-            return process.StandardOutput.ReadToEnd();
+            return new ExecutionResult(process.StandardError.ReadToEnd(),
+              process.StandardOutput.ReadToEnd());
         }
 
-        private object ExecuteBuiltin(string command, string[] parameters)
+        private ExecutionResult ExecuteBuiltin(string command, string[] parameters)
         {
+            string stdout = string.Empty;
             var result = runtime.Execute(command, Environment, parameters);
             if (result is Silly.Shell.Environment)
             {
                 Environment = result as Silly.Shell.Environment;
             }
-            return result;
+            else
+            {
+                stdout = result as string;
+            }
+
+            return new ExecutionResult(stdout, string.Empty);
         }
     }
 }

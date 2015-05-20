@@ -77,11 +77,11 @@ namespace Silly.UI.Shell.ViewModels
                         parameters = commandParts.Skip(1).ToArray();
                     }
                     var result = CommandRunner.Execute(commandParts.First(), parameters);
-                    if (result is Silly.Shell.Environment)
-                    {
-                        return;
-                    }
-                    var output = new OutputViewModel { Output = result.ToString() };
+                    OutputViewModel output = null;
+                    if (result.StandardOut.Length > 0)
+                        output = new OutputViewModel { Output = result.StandardOut };
+                    else if (result.StandardError.Length > 0)
+                        output = new OutputViewModel { Output = result.StandardError };
                     History.Add(output);
                 }
                 catch (Exception exc)
