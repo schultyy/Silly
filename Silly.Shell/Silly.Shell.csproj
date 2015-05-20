@@ -77,9 +77,13 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Commands\cd.ts" />
+    <TypeScriptCompile Include="Commands\exit.ts" />
     <TypeScriptCompile Include="Commands\ls.ts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </TypeScriptCompile>
+    <None Include="Definitions\clr_environment.d.ts">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions\array.d.ts">

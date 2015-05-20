@@ -23,6 +23,7 @@ namespace Silly.Shell
             this.scriptEngine.AddHostType("Directory", typeof(System.IO.Directory));
             this.scriptEngine.AddHostType("DirectoryInfo", typeof(System.IO.DirectoryInfo));
             this.scriptEngine.AddHostType("Environment", typeof(Silly.Shell.Environment));
+            this.scriptEngine.AddHostType("ClrEnvironment", typeof(System.Environment));
             this.LoadCommands(commandFiles);
         }
 
