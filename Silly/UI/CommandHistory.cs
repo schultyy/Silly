@@ -32,5 +32,14 @@ namespace Silly.UI
                 return history.ElementAt(counter);
             return history.ElementAt(counter--);
         }
+
+        public string NextCommand()
+        {
+            if(counter + 1 == history.Count)
+            {
+                return history.Last();
+            }
+            return history.ElementAt(counter++);
+        }
     }
 }

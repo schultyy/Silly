@@ -99,6 +99,10 @@ namespace Silly.UI.Shell.ViewModels
             {
                 this.CurrentLine.Command = this.commandHistory.PreviousCommand();
             }
+            else if(args.Key == Key.Down)
+            {
+                this.CurrentLine.Command = this.commandHistory.NextCommand();
+            }
         }
 
         private void NewCommand()
