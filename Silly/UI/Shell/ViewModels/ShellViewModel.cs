@@ -9,6 +9,7 @@ namespace Silly.UI.Shell.ViewModels
 {
     public class ShellViewModel : Screen
     {
+        private CommandHistory commandHistory;
 
         private CommandRunner commandRunner;
 
@@ -52,6 +53,7 @@ namespace Silly.UI.Shell.ViewModels
         {
             History = new BindableCollection<Screen>();
             CommandRunner = new CommandRunner(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile));
+            commandHistory = new CommandHistory();
             NewCommand();
         }
 
@@ -68,6 +70,7 @@ namespace Silly.UI.Shell.ViewModels
                 var parser = new CommandParser();
                 if (string.IsNullOrEmpty(CurrentLine.Command))
                     return;
+                commandHistory.StoreCommand(CurrentLine.Command);
                 try
                 {
                     var commandParts = parser.Parse(CurrentLine.Command);
@@ -91,6 +94,14 @@ namespace Silly.UI.Shell.ViewModels
 
                 Freeze();
                 NewCommand();
+            }
+            else if(args.Key == Key.Up)
+            {
+                this.CurrentLine.Command = this.commandHistory.PreviousCommand();
+            }
+            else if(args.Key == Key.Down)
+            {
+                this.CurrentLine.Command = this.commandHistory.NextCommand();
             }
         }
 
