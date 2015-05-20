@@ -16,7 +16,7 @@
             <DataTemplate DataType="{x:Type viewmodels:CommandViewModel}">
                 <StackPanel>
                     <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                            AncestorType={x:Type UserControl}}, Path=DataContext.CurrentEnvironment.CurrentWorkingDirectory}" />
+                                            AncestorType={x:Type UserControl}}, Path=DataContext.CommandRunner.Environment.CurrentWorkingDirectory}" />
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />

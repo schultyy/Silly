@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="CommandParser.cs" />
+    <Compile Include="CommandRunner.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="File.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,19 +9,18 @@ namespace Silly.UI.Shell.ViewModels
 {
     public class ShellViewModel : Screen
     {
-        private ScriptRuntime runtime;
 
-        private Silly.Shell.Environment currentEnvironment;
+        private CommandRunner commandRunner;
 
-        public Silly.Shell.Environment CurrentEnvironment
+        public CommandRunner CommandRunner
         {
-            get { return currentEnvironment; }
+            get { return commandRunner; }
             set
             {
-                if (currentEnvironment == value)
+                if (commandRunner == value)
                     return;
-                currentEnvironment = value;
-                NotifyOfPropertyChange(() => CurrentEnvironment);
+                commandRunner = value;
+                NotifyOfPropertyChange(() => CommandRunner);
             }
         }
 
@@ -52,7 +51,7 @@ namespace Silly.UI.Shell.ViewModels
         public ShellViewModel()
         {
             History = new BindableCollection<Screen>();
-            Initialize();
+            CommandRunner = new CommandRunner(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile));
             NewCommand();
         }
 
@@ -77,16 +76,13 @@ namespace Silly.UI.Shell.ViewModels
                     {
                         parameters = commandParts.Skip(1).ToArray();
                     }
-                    var result = runtime.Execute(commandParts.First(), CurrentEnvironment, parameters);
+                    var result = CommandRunner.Execute(commandParts.First(), parameters);
                     if (result is Silly.Shell.Environment)
                     {
-                        currentEnvironment = result as Silly.Shell.Environment;
+                        return;
                     }
-                    else
-                    {
-                        var output = new OutputViewModel { Output = result.ToString() };
-                        History.Add(output);
-                    }
+                    var output = new OutputViewModel { Output = result.ToString() };
+                    History.Add(output);
                 }
                 catch (Exception exc)
                 {
@@ -96,14 +92,6 @@ namespace Silly.UI.Shell.ViewModels
                 Freeze();
                 NewCommand();
             }
-        }
-
-        private void Initialize()
-        {
-            var bootstrapper = new Bootstrapper();
-            bootstrapper.GatherFiles();
-            this.runtime = new ScriptRuntime(bootstrapper.Files);
-            CurrentEnvironment = new Silly.Shell.Environment(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal));
         }
 
         private void NewCommand()
