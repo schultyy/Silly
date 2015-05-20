@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Silly.UI
 {
@@ -15,7 +17,14 @@ namespace Silly.UI
         public CommandHistory()
         {
             history = new List<string>();
-            counter = 0; 
+            counter = 0;
+            this.Load();
+            App.Current.Exit += Current_Exit;
+        }
+
+        private void Current_Exit(object sender, System.Windows.ExitEventArgs e)
+        {
+            this.Save();
         }
 
         public void StoreCommand(string command)
@@ -42,6 +51,35 @@ namespace Silly.UI
             if(counter + 1 == history.Count)
                 return history.Last();
             return history.ElementAt(counter++);
+        }
+
+        private void Load()
+        {
+            var personal = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            var folderPath = Path.Combine(personal, ".silly");
+            var historyFilename = Path.Combine(folderPath, "history.xml");
+            if (!Directory.Exists(folderPath))
+                return;
+            if (!File.Exists(historyFilename))
+                return;
+            using (var streamReader = new StreamReader(historyFilename))
+            {
+                var serializer = new XmlSerializer(typeof(List<string>));
+                this.history = serializer.Deserialize(streamReader) as List<String>;
+            }
+        }
+
+        private void Save()
+        {
+            var personal = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            var folderPath = Path.Combine(personal, ".silly");
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+            using(var streamWriter = new StreamWriter(Path.Combine(folderPath, "history.xml")))
+            {
+                var serializer = new XmlSerializer(typeof(List<string>));
+                serializer.Serialize(streamWriter, history);
+            }
         }
     }
 }
