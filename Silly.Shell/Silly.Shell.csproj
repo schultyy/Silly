@@ -85,6 +85,10 @@
     <None Include="Definitions\clr_environment.d.ts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Definitions\clr_path.d.ts">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <TypeScriptCompile Include="Definitions\clr_console.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions\array.d.ts">
