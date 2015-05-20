@@ -28,6 +28,8 @@ namespace Silly.UI
 
         public string PreviousCommand()
         {
+            if (history.Count == 0)
+                return string.Empty;
             if (counter == 0)
                 return history.ElementAt(counter);
             return history.ElementAt(counter--);
@@ -35,10 +37,10 @@ namespace Silly.UI
 
         public string NextCommand()
         {
+            if (history.Count == 0)
+                return string.Empty;
             if(counter + 1 == history.Count)
-            {
                 return history.Last();
-            }
             return history.ElementAt(counter++);
         }
     }
