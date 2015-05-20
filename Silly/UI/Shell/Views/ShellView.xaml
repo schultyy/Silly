@@ -10,14 +10,13 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:ext="clr-namespace:Silly.UI.Extensions"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" MinWidth="800" MinHeight="600"
-             x:Name="parent">
+             d:DesignHeight="300" d:DesignWidth="300" MinWidth="800" MinHeight="600">
     <ItemsControl ItemsSource="{Binding History}">
         <ItemsControl.Resources>
             <DataTemplate DataType="{x:Type viewmodels:CommandViewModel}">
                 <StackPanel>
                     <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                            AncestorType={x:Type UserControl}}, Path=DataContext.CurrentEnvironment.CurrentWorkingDirectory}" />
+                                            AncestorType={x:Type UserControl}}, Path=DataContext.CommandRunner.Environment.CurrentWorkingDirectory}" />
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />

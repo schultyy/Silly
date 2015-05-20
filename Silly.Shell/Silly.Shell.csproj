@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="CommandParser.cs" />
+    <Compile Include="CommandRunner.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="File.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,23 +77,27 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Commands\cd.ts" />
+    <TypeScriptCompile Include="Commands\exit.ts" />
     <TypeScriptCompile Include="Commands\ls.ts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </TypeScriptCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Commands\Definitions\array.d.ts">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Commands\Definitions\directory.d.ts">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Commands\Definitions\string.d.ts">
+    <None Include="Definitions\clr_environment.d.ts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Commands\Definitions\environment.d.ts">
+    <None Include="Definitions\array.d.ts">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Definitions\directory.d.ts">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Definitions\string.d.ts">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Definitions\environment.d.ts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <TypeScriptCompile Include="Commands\pwd.ts">
