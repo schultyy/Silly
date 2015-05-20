@@ -26,7 +26,7 @@
                         <TextBox Grid.Column="1" Text="{Binding Command, UpdateSourceTrigger=PropertyChanged}" 
                              BorderBrush="{x:Null}"
                              BorderThickness="0"
-                             cal:Message.Attach="[Event PreviewKeyDown]=[Action ExecuteCommand($eventargs)]" 
+                             cal:Message.Attach="[Event PreviewKeyDown]=[Action ExecuteCommand($eventargs)];" 
                              IsReadOnly="{Binding IsReadOnly, UpdateSourceTrigger=PropertyChanged}" 
                              ext:FocusExtension.IsFocused="{Binding IsFocused}" />
                     </Grid>
