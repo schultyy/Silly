@@ -14,7 +14,7 @@ namespace Silly.Shell
         public ScriptRuntime(List<File> commandFiles)
         {
             scriptEngine = new V8ScriptEngine();
-            this.scriptEngine.AddHostType("Console", typeof(Console));
+            this.scriptEngine.AddHostType("ClrConsole", typeof(Console));
             this.scriptEngine.AddHostType("ClrString", typeof(string));
             this.scriptEngine.AddHostType("ClrList", typeof(List<>));
             this.scriptEngine.AddHostType("ClrArray", typeof(Array));
@@ -24,6 +24,7 @@ namespace Silly.Shell
             this.scriptEngine.AddHostType("DirectoryInfo", typeof(System.IO.DirectoryInfo));
             this.scriptEngine.AddHostType("Environment", typeof(Silly.Shell.Environment));
             this.scriptEngine.AddHostType("ClrEnvironment", typeof(System.Environment));
+            this.scriptEngine.AddHostType("ClrPath", typeof(System.IO.Path));
             this.LoadCommands(commandFiles);
         }
 
