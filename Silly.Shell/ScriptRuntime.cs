@@ -43,6 +43,12 @@ namespace Silly.Shell
             return this.scriptEngine.Invoke(command, parameters.ToArray());
         }
 
+        public bool HasCommand(string command)
+        {
+            var result = scriptEngine.Evaluate(string.Format("typeof {0}", command)) as string;
+            return result != "undefined";
+        }
+
         public void Dispose()
         {
             scriptEngine.Dispose();
